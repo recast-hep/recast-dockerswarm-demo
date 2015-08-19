@@ -7,7 +7,7 @@ to start processing one needs to:
 know for docker swarm one would need to have a 3 step process:
 
 1) start redis and worker containers (i.e. know we have messaging setup and workers waiting for jobs)
-    docker-compose scale redis=1 worker=X
+    docker-compose scale redis=1 worker=X # note: order is important.. workers want to link to redis, so it needs to exist before
 2) start head container (the run cmd here will submit actual jobs
     docker-compose run —rm head recastworkflow-headnode /bla
 3) tear down redis, workers after head exited.
