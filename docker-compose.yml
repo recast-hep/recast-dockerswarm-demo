@@ -1,0 +1,24 @@
+worker:
+  image: lukasheinrich/dockerswarm-demo
+  environment:
+    - CELERY_REDIS_DB=0
+    - C_FORCE_ROOT=true
+  links:
+    - redis
+  command: recastworkflow-workernode
+  volumes:
+    - .:/bla
+
+redis:
+  image: redis
+
+head:
+  image: lukasheinrich/dockerswarm-demo
+  environment:
+    - CELERY_REDIS_DB=0
+    - C_FORCE_ROOT=true
+  links:
+    - redis
+    - worker
+  volumes:
+    - .:/bla

@@ -1,0 +1,15 @@
+to start processing one needs to:
+
+    redis: this is basically the head node (steers the messaging between headcli and workers). runtime: unlimited         
+    headcli: this is what knows the DAG and submits tasks to workers. runtime: length of DAG processing
+    workers: these are celery worker that execute the tasks the headcli submits
+
+know for docker swarm one would need to have a 3 step process:
+
+1) start redis and worker containers (i.e. know we have messaging setup and workers waiting for jobs)
+    docker-compose scale redis=1 worker=X
+2) start head container (the run cmd here will submit actual jobs
+    docker-compose run —rm head recastworkflow-headnode /bla
+3) tear down redis, workers after head exited.
+    docker-compose stop && docker-compose rm
+
